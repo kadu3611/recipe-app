@@ -45,7 +45,7 @@ function FavoriteRecipes() {
       </section>
       <div>
         {
-          arrayFavorite.map((item, index) => (
+          arrayFavorite && arrayFavorite.map((item, index) => (
             <div
               key={ index }
             >
