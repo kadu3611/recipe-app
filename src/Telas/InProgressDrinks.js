@@ -13,7 +13,8 @@ function InProgressDrinks() {
     // inProgressRecipes,
     clickCopy,
     textCopyLink, favoritBlackHeart,
-    clickHeartBlack, setFavoritBlackHeart } = useContext(ContextDetailsDrinks);
+    clickHeartBlack, setFavoritBlackHeart,
+    alterChecked, setAlterChecked } = useContext(ContextDetailsDrinks);
 
   const history = useHistory();
   const idHistory = (history.location.pathname.split('/')[2]);
@@ -31,7 +32,12 @@ function InProgressDrinks() {
   function submitLocalRecipes(name) {
     const local = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const idName = local.cocktails[idHistory];
-
+    if (alterChecked.some((item) => item === name)) {
+      const withdrawArray = alterChecked.filter((elemento) => elemento !== name);
+      setAlterChecked(withdrawArray);
+    } else {
+      setAlterChecked([...alterChecked, name]);
+    }
     if (idName.some((item) => item === name)) {
       const arrayName = idName.filter((item) => item !== name);
       const withdrawLocal = {
@@ -133,10 +139,12 @@ function InProgressDrinks() {
                     <input
                       id={ numbers }
                       type="checkbox"
-                      checked
+                      defaultChecked={
+                        alterChecked.some((name) => name === elemento.ingredients)
+                      }
                       name={ ` ${elemento.ingredients} ${elemento.measure}` }
                       value={ ` ${elemento.ingredients} - ${elemento.measure}` }
-                      onClick={ () => submitLocalRecipes(elemento.ingredients) }
+                      onChange={ () => submitLocalRecipes(elemento.ingredients) }
                     />
                     <label htmlFor={ numbers }>
                       { ` ${elemento.ingredients} - ${elemento.measure}` }

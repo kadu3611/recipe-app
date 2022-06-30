@@ -20,6 +20,7 @@ function ProviderDetailsDrinks({ children }) {
   const [textCopyLink, setTextCopyLink] = useState(false);
   const [favoritBlackHeart, setFavoritBlackHeart] = useState(false);
   const [localRecipes, setLocalRecipes] = useState([]);
+  const [alterChecked, setAlterChecked] = useState([]);
 
   async function functionPullId() {
     try {
@@ -134,6 +135,8 @@ function ProviderDetailsDrinks({ children }) {
     clickHeartBlack,
     setFavoritBlackHeart,
     favoritBlackHeart,
+    alterChecked,
+    setAlterChecked,
   };
 
   return (
