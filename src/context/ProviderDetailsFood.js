@@ -15,8 +15,8 @@ function ProviderDetailsFood({ children }) {
   const [arrayId, setArrayId] = useState([]);
   const [arrayIngredients, setArrayIngredients] = useState([]);
   const [arrayPatternDrink, setArrayPatternDrink] = useState([]);
-  const [performedRecipes, setPerformedRecipes] = useState(false);
-  const [continueRecipes, setContinueRecipes] = useState(false);
+  // const [performedRecipes, setPerformedRecipes] = useState(false);
+  // const [continueRecipes, setContinueRecipes] = useState(false);
   const [textCopyLink, setTextCopyLink] = useState(false);
   const [favoritBlackHeart, setFavoritBlackHeart] = useState(false);
 
@@ -49,7 +49,7 @@ function ProviderDetailsFood({ children }) {
     }
   }
 
-  function doneRecipes() {
+  /*  function doneRecipes() {
     const doneLocalStorage = localStorage.getItem('doneRecipes');
     if (doneLocalStorage !== null) {
       for (let i = 0; i < doneLocalStorage.length; i += 1) {
@@ -59,9 +59,9 @@ function ProviderDetailsFood({ children }) {
         }
       }
     }
-  }
+  } */
 
-  function inProgressRecipes() {
+  /*  function inProgressRecipes() {
     const inProgress = localStorage.getItem('inProgressRecipes');
     if (inProgress !== null) {
       for (let i = 0; i < inProgress.length; i += 1) {
@@ -72,7 +72,7 @@ function ProviderDetailsFood({ children }) {
         }
       }
     }
-  }
+  } */
 
   function clickCopy() {
     copy(`http://localhost:3000${history.location.pathname}`);
@@ -114,10 +114,10 @@ function ProviderDetailsFood({ children }) {
     functionPullId,
     arrayIngredients,
     arrayPatternDrink,
-    setPerformedRecipes,
-    performedRecipes,
-    doneRecipes,
-    inProgressRecipes,
+    // setPerformedRecipes,
+    // performedRecipes,
+    // doneRecipes,
+    // inProgressRecipes,
     clickCopy,
     textCopyLink,
     clickHeartBlack,

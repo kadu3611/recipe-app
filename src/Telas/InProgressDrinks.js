@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-
+import { Link, useHistory } from 'react-router-dom';
 import shareImage from '../images/shareIcon.svg';
 import ContextDetailsDrinks from '../context/DetailsDrinks/ContextDetailsDrinks';
 import '../DetailsCss/details.css';
@@ -10,10 +9,47 @@ import favoritImageBlackHeart from '../images/blackHeartIcon.svg';
 function InProgressDrinks() {
   const { arrayId, functionPullId,
     arrayIngredients,
-    doneRecipes,
-    inProgressRecipes, clickCopy,
+    // doneRecipes,
+    // inProgressRecipes,
+    clickCopy,
     textCopyLink, favoritBlackHeart,
     clickHeartBlack, setFavoritBlackHeart } = useContext(ContextDetailsDrinks);
+
+  const history = useHistory();
+  const idHistory = (history.location.pathname.split('/')[2]);
+
+  function addIdLocal() {
+    const localS = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const objectNew = {
+      ...localS,
+      cocktails: { ...localS.cocktails, [idHistory]: [] },
+    };
+    localStorage.setItem('inProgressRecipes',
+      JSON.stringify(objectNew));
+  }
+
+  function submitLocalRecipes(name) {
+    const local = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const idName = local.cocktails[idHistory];
+
+    if (idName.some((item) => item === name)) {
+      const arrayName = idName.filter((item) => item !== name);
+      const withdrawLocal = {
+        ...local,
+        cocktails: { ...local.cocktails, [idHistory]: [...arrayName] },
+      };
+      localStorage.setItem('inProgressRecipes',
+        JSON.stringify(withdrawLocal));
+    } else {
+      const newObject = {
+        ...local,
+        cocktails: { ...local.cocktails,
+          [idHistory]: [...local.cocktails[idHistory], name] },
+      };
+      localStorage.setItem('inProgressRecipes',
+        JSON.stringify(newObject));
+    }
+  }
 
   function checkHeartBlack() {
     const localFavorit = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -25,11 +61,15 @@ function InProgressDrinks() {
 
   useEffect(() => {
     functionPullId();
-    inProgressRecipes();
-    doneRecipes();
+    /* inProgressRecipes(); */
+    // doneRecipes();
     checkHeartBlack();
-    if (!JSON.parse(localStorage.getItem('favoriteRecipes'))) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    if (!JSON.parse(localStorage.getItem('inProgressRecipes'))) {
+      localStorage.setItem('inProgressRecipes',
+        JSON.stringify({ cocktails: { [idHistory]: [] },
+          meals: {} }));
+    } else {
+      addIdLocal();
     }
   }, []);
 
@@ -93,8 +133,10 @@ function InProgressDrinks() {
                     <input
                       id={ numbers }
                       type="checkbox"
-                      name={ ` ${elemento.ingredients} - ${elemento.measure}` }
+                      checked
+                      name={ ` ${elemento.ingredients} ${elemento.measure}` }
                       value={ ` ${elemento.ingredients} - ${elemento.measure}` }
+                      onClick={ () => submitLocalRecipes(elemento.ingredients) }
                     />
                     <label htmlFor={ numbers }>
                       { ` ${elemento.ingredients} - ${elemento.measure}` }

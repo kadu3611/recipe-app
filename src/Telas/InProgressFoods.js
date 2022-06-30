@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import shareImage from '../images/shareIcon.svg';
 import favoritImageHeart from '../images/whiteHeartIcon.svg';
 import favoritImageBlackHeart from '../images/blackHeartIcon.svg';
@@ -7,11 +7,14 @@ import ContextDetailsFood from '../context/ContextDetailsFood';
 
 function InProgressFoods() {
   const { arrayId, functionPullId,
-    arrayIngredients, doneRecipes,
-    inProgressRecipes,
+    arrayIngredients, // doneRecipes,
+    // inProgressRecipes,
     clickCopy, textCopyLink,
     favoritBlackHeart,
     clickHeartBlack, setFavoritBlackHeart } = useContext(ContextDetailsFood);
+
+  const history = useHistory();
+  const idHistory = (history.location.pathname.split('/')[2]);
 
   function checkHeartBlack() {
     const localFavorit = JSON.parse(localStorage.getItem('favoriteRecipes'));
@@ -21,13 +24,50 @@ function InProgressFoods() {
     }
   }
 
+  function addIdLocal() {
+    const localS = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const objectNew = {
+      ...localS,
+      meals: { ...localS.meals, [idHistory]: [] },
+    };
+    localStorage.setItem('inProgressRecipes',
+      JSON.stringify(objectNew));
+  }
+
+  function submitLocalRecipes(name) {
+    const local = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const idName = local.meals[idHistory];
+
+    if (idName.some((item) => item === name)) {
+      const arrayName = idName.filter((item) => item !== name);
+      const withdrawLocal = {
+        ...local,
+        meals: { ...local.meals, [idHistory]: [...arrayName] },
+      };
+      localStorage.setItem('inProgressRecipes',
+        JSON.stringify(withdrawLocal));
+    } else {
+      const newObject = {
+        ...local,
+        meals: { ...local.meals,
+          [idHistory]: [...local.meals[idHistory], name] },
+      };
+      localStorage.setItem('inProgressRecipes',
+        JSON.stringify(newObject));
+    }
+  }
+
   useEffect(() => {
     functionPullId();
     checkHeartBlack();
-    doneRecipes();
-    inProgressRecipes();
-    if (!JSON.parse(localStorage.getItem('favoriteRecipes'))) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    // doneRecipes();
+    // inProgressRecipes();
+    if (!JSON.parse(localStorage.getItem('inProgressRecipes'))) {
+      localStorage.setItem('inProgressRecipes',
+        JSON.stringify({ cocktails: {},
+          meals: { [idHistory]: [] } }));
+    } else {
+      addIdLocal();
     }
   }, []);
 
@@ -95,8 +135,10 @@ function InProgressFoods() {
                     <input
                       id={ numbers }
                       type="checkbox"
+                      checked
                       name={ ` ${elemento.ingredients} - ${elemento.measure}` }
                       value={ ` ${elemento.ingredients} - ${elemento.measure}` }
+                      onClick={ () => submitLocalRecipes(elemento.ingredients) }
                     />
                     <label htmlFor={ numbers }>
                       { ` ${elemento.ingredients} - ${elemento.measure}` }
