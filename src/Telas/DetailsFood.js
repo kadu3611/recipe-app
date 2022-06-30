@@ -9,8 +9,8 @@ import '../DetailsCss/details.css';
 function DetailsFood() {
   const { arrayId, functionPullId,
     arrayIngredients, arrayPatternDrink,
-    performedRecipes, doneRecipes,
-    inProgressRecipes,
+    performedRecipes, // doneRecipes,
+    // inProgressRecipes,
     continueRecipes,
     clickCopy, textCopyLink,
     clickHeartBlack, setFavoritBlackHeart,
@@ -30,8 +30,8 @@ function DetailsFood() {
   useEffect(() => {
     checkHeartBlack();
     functionPullId();
-    doneRecipes();
-    inProgressRecipes();
+    // doneRecipes();
+    // inProgressRecipes();
     if (!JSON.parse(localStorage.getItem('favoriteRecipes'))) {
       localStorage.setItem('favoriteRecipes', JSON.stringify([]));
     }

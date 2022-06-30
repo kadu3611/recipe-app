@@ -11,8 +11,9 @@ function DetailsDrink() {
   const { arrayId, functionPullId,
     arrayIngredients, arrayPatternFood,
     performedRecipes,
-    continueRecipes, doneRecipes,
-    inProgressRecipes, clickCopy,
+    continueRecipes, // doneRecipes,
+    // inProgressRecipes,
+    clickCopy,
     textCopyLink, clickHeartBlack,
     setFavoritBlackHeart, favoritBlackHeart } = useContext(ContextDetailsDrinks);
 
@@ -28,8 +29,8 @@ function DetailsDrink() {
 
   useEffect(() => {
     functionPullId();
-    inProgressRecipes();
-    doneRecipes();
+    // inProgressRecipes();
+    // doneRecipes();
     if (!JSON.parse(localStorage.getItem('favoriteRecipes'))) {
       localStorage.setItem('favoriteRecipes', JSON.stringify([]));
     }

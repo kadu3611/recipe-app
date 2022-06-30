@@ -66,6 +66,7 @@ function ProviderDrinks({ children }) {
       console.log(error);
     }
   }
+
   const contextType = {
     filterDrinks: async (ingredient) => filterDrinksByIngredient(ingredient),
     categoryApiDrink,
