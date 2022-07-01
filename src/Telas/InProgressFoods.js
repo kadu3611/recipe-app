@@ -9,7 +9,7 @@ function InProgressFoods() {
   const { arrayId, functionPullId,
     arrayIngredients, // doneRecipes,
     // inProgressRecipes,
-    clickCopy, textCopyLink,
+    clickCopyInpRogress, textCopyLink,
     favoritBlackHeart,
     clickHeartBlack, setFavoritBlackHeart,
     alterChecked,
@@ -82,7 +82,7 @@ function InProgressFoods() {
     <button
       data-testid="share-btn"
       type="button"
-      onClick={ () => { clickCopy(); } }
+      onClick={ () => { clickCopyInpRogress(); } }
     >
       <img
         src={ shareImage }
@@ -117,11 +117,11 @@ function InProgressFoods() {
             }
 
             <button
-              data-testid="favorite-btn"
               type="button"
               onClick={ () => { clickHeartBlack(); } }
             >
               <img
+                data-testid="favorite-btn"
                 src={ favoritBlackHeart ? favoritImageBlackHeart : favoritImageHeart }
                 alt="Favorite"
               />
@@ -166,7 +166,13 @@ function InProgressFoods() {
             </div>
             <div>
               <Link to="/done-recipes">
-                <button data-testid="finish-recipe-btn" type="button">
+                <button
+                  data-testid="finish-recipe-btn"
+                  type="button"
+                  disabled={ !(arrayIngredients
+                    .every((elemento, name) => (
+                      elemento.ingredients === alterChecked[name]))) }
+                >
                   Finish Recipe
                 </button>
               </Link>

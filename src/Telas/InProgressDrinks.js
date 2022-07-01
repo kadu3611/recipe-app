@@ -11,7 +11,8 @@ function InProgressDrinks() {
     arrayIngredients,
     // doneRecipes,
     // inProgressRecipes,
-    clickCopy,
+    // clickCopy,
+    clickCopyInpRogress,
     textCopyLink, favoritBlackHeart,
     clickHeartBlack, setFavoritBlackHeart,
     alterChecked, setAlterChecked } = useContext(ContextDetailsDrinks);
@@ -83,7 +84,7 @@ function InProgressDrinks() {
     <button
       data-testid="share-btn"
       type="button"
-      onClick={ () => { clickCopy(); } }
+      onClick={ () => { clickCopyInpRogress(); } }
     >
       <img
         src={ shareImage }
@@ -162,7 +163,16 @@ function InProgressDrinks() {
             </div>
             <div>
               <Link to="/done-recipes">
-                <button data-testid="finish-recipe-btn" type="button">
+                <button
+                  data-testid="finish-recipe-btn"
+                  type="button"
+                  className="button-details"
+                  disabled={ !(arrayIngredients
+                    .every((elemento, name) => (
+                      elemento.ingredients === alterChecked[name]))) }
+                  // alterChecked
+                >
+                  {console.log() }
                   Finish Recipe
                 </button>
               </Link>

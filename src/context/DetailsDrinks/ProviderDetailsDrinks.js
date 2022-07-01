@@ -92,6 +92,15 @@ function ProviderDetailsDrinks({ children }) {
     setTextCopyLink(true);
   }
 
+  function clickCopyInpRogress() {
+    if (history.location.pathname.split('/')[1] === 'drinks') {
+      copy(`http://localhost:3000/drinks/${idHistory}`);
+    } else {
+      copy(`http://localhost:3000/foods/${idHistory}`);
+    }
+    setTextCopyLink(true);
+  }
+
   function saveFavoriteProdut(favoriteProduto) {
     localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteProduto));
   }
@@ -137,6 +146,7 @@ function ProviderDetailsDrinks({ children }) {
     favoritBlackHeart,
     alterChecked,
     setAlterChecked,
+    clickCopyInpRogress,
   };
 
   return (
