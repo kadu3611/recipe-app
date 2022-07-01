@@ -11,9 +11,11 @@ function InProgressDrinks() {
     arrayIngredients,
     // doneRecipes,
     // inProgressRecipes,
-    clickCopy,
+    // clickCopy,
+    clickCopyInpRogress,
     textCopyLink, favoritBlackHeart,
-    clickHeartBlack, setFavoritBlackHeart } = useContext(ContextDetailsDrinks);
+    clickHeartBlack, setFavoritBlackHeart,
+    alterChecked, setAlterChecked } = useContext(ContextDetailsDrinks);
 
   const history = useHistory();
   const idHistory = (history.location.pathname.split('/')[2]);
@@ -31,7 +33,12 @@ function InProgressDrinks() {
   function submitLocalRecipes(name) {
     const local = JSON.parse(localStorage.getItem('inProgressRecipes'));
     const idName = local.cocktails[idHistory];
-
+    if (alterChecked.some((item) => item === name)) {
+      const withdrawArray = alterChecked.filter((elemento) => elemento !== name);
+      setAlterChecked(withdrawArray);
+    } else {
+      setAlterChecked([...alterChecked, name]);
+    }
     if (idName.some((item) => item === name)) {
       const arrayName = idName.filter((item) => item !== name);
       const withdrawLocal = {
@@ -77,7 +84,7 @@ function InProgressDrinks() {
     <button
       data-testid="share-btn"
       type="button"
-      onClick={ () => { clickCopy(); } }
+      onClick={ () => { clickCopyInpRogress(); } }
     >
       <img
         src={ shareImage }
@@ -133,10 +140,12 @@ function InProgressDrinks() {
                     <input
                       id={ numbers }
                       type="checkbox"
-                      checked
+                      defaultChecked={
+                        alterChecked.some((name) => name === elemento.ingredients)
+                      }
                       name={ ` ${elemento.ingredients} ${elemento.measure}` }
                       value={ ` ${elemento.ingredients} - ${elemento.measure}` }
-                      onClick={ () => submitLocalRecipes(elemento.ingredients) }
+                      onChange={ () => submitLocalRecipes(elemento.ingredients) }
                     />
                     <label htmlFor={ numbers }>
                       { ` ${elemento.ingredients} - ${elemento.measure}` }
@@ -154,7 +163,16 @@ function InProgressDrinks() {
             </div>
             <div>
               <Link to="/done-recipes">
-                <button data-testid="finish-recipe-btn" type="button">
+                <button
+                  data-testid="finish-recipe-btn"
+                  type="button"
+                  className="button-details"
+                  disabled={ !(arrayIngredients
+                    .every((elemento, name) => (
+                      elemento.ingredients === alterChecked[name]))) }
+                  // alterChecked
+                >
+                  {console.log() }
                   Finish Recipe
                 </button>
               </Link>

@@ -20,6 +20,7 @@ function ProviderDetailsDrinks({ children }) {
   const [textCopyLink, setTextCopyLink] = useState(false);
   const [favoritBlackHeart, setFavoritBlackHeart] = useState(false);
   const [localRecipes, setLocalRecipes] = useState([]);
+  const [alterChecked, setAlterChecked] = useState([]);
 
   async function functionPullId() {
     try {
@@ -91,6 +92,15 @@ function ProviderDetailsDrinks({ children }) {
     setTextCopyLink(true);
   }
 
+  function clickCopyInpRogress() {
+    if (history.location.pathname.split('/')[1] === 'drinks') {
+      copy(`http://localhost:3000/drinks/${idHistory}`);
+    } else {
+      copy(`http://localhost:3000/foods/${idHistory}`);
+    }
+    setTextCopyLink(true);
+  }
+
   function saveFavoriteProdut(favoriteProduto) {
     localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteProduto));
   }
@@ -134,6 +144,9 @@ function ProviderDetailsDrinks({ children }) {
     clickHeartBlack,
     setFavoritBlackHeart,
     favoritBlackHeart,
+    alterChecked,
+    setAlterChecked,
+    clickCopyInpRogress,
   };
 
   return (
