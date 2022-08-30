@@ -1,4 +1,4 @@
-# recipe-app
+# Recipe-app
 Application developed to close the frontend module on Trybe
 Foi desenvolvido em grupo um app de receitas, dentro do ecossistema React: Hooks e Context API!
 
@@ -8,7 +8,7 @@ A base de dados são 2 APIs distintas, uma para comidas e outra para bebidas.
 
 O layout tem como foco dispositivos móveis, então todos os protótipos estão desenvolvidos em telas menores.
 
-Protótipo do projeto
+## Protótipo do projeto
 Você pode acessar um protótipo no link abaixo:
 
 https://www.figma.com/file/cBDVGdqQxUuVlQp3ehW7wx/Recipes-App
