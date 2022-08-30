@@ -17,12 +17,13 @@ export default function Profile() {
     localStorage.clear();
     setEmail('');
   };
+  const newEmail = JSON.parse(emailFromLocal);
 
   return (
     <main>
       <Header title="Profile" />
       <section>
-        <h3 data-testid="profile-email">{emailFromLocal}</h3>
+        <h3 data-testid="profile-email">{newEmail.email}</h3>
 
       </section>
       <section>
